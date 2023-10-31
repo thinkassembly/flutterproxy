@@ -2,7 +2,7 @@
 
 I was working on a Flutter web app that stores the backend API authentication credentials as cookies. The web app is hosted on `localhost` during development, but the API backend is still hosted on the production web server. Chrome blocks the cookies from the API backend according to the production web server's CORS policy. The production web server also requires automatic upgrade of HTTP to HTTPS.
 
-I needed a proxy that can:
+Motivation - I needed a proxy that can:
 
 1.  Redirect the Flutter dev server URL for the web app to HTTPS.
 2.  Use a self-signed CA to dynamically generate a TLS certificate for the production web server's domain.
@@ -22,7 +22,7 @@ go install github.com/erdichen/flutterproxy@latest
 ### Create a fake CA
 
 ```shell
-flutteryproxy genca --cert=secret/cert.pem --key=secret/key.pem
+flutterproxy genca --cert=secret/cert.pem --key=secret/key.pem
 ```
 
 ### Add the fake CA's certificate to Chrome's CA certificate store
@@ -39,6 +39,10 @@ Chrome on Linux uses the `nssdb` certificate database from Firefox.
     ```shell
     certutil -d $HOME/.pki/nssdb -A -n "Fake CA" -t "CT,c,c" < secret/cert.pem
     ```
+3.  Delete the fake CA after testing
+    ```shell
+    certutil -d $HOME/.pki/nssdb -D -n "Fake CA"
+    ```
 
 ### MacOS
 
@@ -51,7 +55,7 @@ NOTE: The new CA certificate applies to all applications. Keep the `secret/key.p
 ## Start the Proxy
 
 ```shell
-flutteryproxy run --cert=secret/cert.pem --key=secret/key.pem --host_pair=yoursite.com:443,127.0.0.1:7777 --prefix_pair=yoursite.com:443,/api
+flutterproxy run --cert=secret/cert.pem --key=secret/key.pem --host_pair=yoursite.com:443,127.0.0.1:7777 --prefix_pair=yoursite.com:443,/api
 ```
 
 Explanation of the flags:
