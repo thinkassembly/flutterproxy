@@ -12,8 +12,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/erdichen/flutterproxy/fakeca"
-	"github.com/erdichen/flutterproxy/httpsproxy"
+	"github.com/thinkassembly/flutterproxy/fakeca"
+	"github.com/thinkassembly/flutterproxy/httpsproxy"
 )
 
 // New returns a HTTP CONNECT proxy server.

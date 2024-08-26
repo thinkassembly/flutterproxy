@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/erdichen/flutterproxy/connectproxy"
-	"github.com/erdichen/flutterproxy/fakeca"
+	"github.com/thinkassembly/flutterproxy/connectproxy"
+	"github.com/thinkassembly/flutterproxy/fakeca"
 )
 
 type strList []string
